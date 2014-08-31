@@ -1,45 +1,37 @@
 package com.java;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.text.AttributedCharacterIterator;
+
 /**
- * Created by Antenor on 12/08/10014.
+ * Created by Antenor on 12/08/2014.
  */
-public class EquacaoReta {
+public class EquacaoReta extends JPanel{
     private static int tamanhoX = 31;
     private static int tamanhoY = 31;
+    private static int valorXInicial = 10;
+    private static int valorYInicial = 10;
+    private static int valorXFinal = 150;
+    private static int valorYFinal = 150;
     private static String[][] tela = new String[tamanhoX][tamanhoY];
+    private static Graphics graphics;
+
+    public EquacaoReta(){
+        super();
+    }
 
     public static void main(String args[]) {
-        desenharMatriz(tela);
-        int valorXInicial = 5;
-        int valorYInicial = 8;
-        int valorXFinal = 9;
-        int valorYFinal = 11;
+//        desenharMatriz(tela);
         int raio = 10;
-//        desenhar(-1, -1);
-//        mostrar(tela);
-//        System.out.println("Reta1 (5,8), (9,11)");
-//        Bresenham(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
-//        System.out.println();
-//        tela = new String[100][100];
-//
-//        System.out.println("Reta2 (3,10), (9,7)");
-//        valorXInicial = 3;
-//        valorYInicial = 10;
-//        valorXFinal = 9;
-//        valorYFinal = 7;
-//        Bresenham(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
-//        System.out.println();
-//        tela = new String[100][100];
-//
-//        System.out.println("Reta3 (10,7), (5,12)");
-//        valorXInicial = 10;
-//        valorYInicial = 7;
-//        valorXFinal = 5;
-//        valorYFinal = 12;
 //        Bresenham(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
 //        ForcaBruta(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
-//        DDA(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
-        circuferencia(raio);
+//        circuferencia(raio);
+        construirJPanel("TESTE");
+
+
+        DDA(valorXInicial, valorYInicial, valorXFinal, valorYFinal, graphics);
     }
 
     private static void circuferencia(int raio) {
@@ -145,12 +137,13 @@ public class EquacaoReta {
         }
     }
 
-    private static void DDA(double valorXInicial, double valorYInicial, double valorXFinal, double valorYFinal) {
-        double coeficienteReta = (valorYFinal - valorYInicial) / (valorXFinal - valorXInicial);
-        double b = valorYInicial - (coeficienteReta * valorXInicial);
-        double valorY;
-        double valorX = valorXInicial;
-        double pontoAnterior = valorYInicial;
+    private static void DDA(int valorXInicial, int valorYInicial, int valorXFinal, int valorYFinal, Graphics graphics) {
+        construirJPanel("DDA");
+        int coeficienteReta = (valorYFinal - valorYInicial) / (valorXFinal - valorXInicial);
+        int b = valorYInicial - (coeficienteReta * valorXInicial);
+        int valorY;
+        int valorX = valorXInicial;
+        int pontoAnterior = valorYInicial;
         boolean multiplicaUmaVez = true;
 
         int contador = (int) Math.round((valorXFinal - valorXInicial));
@@ -170,6 +163,7 @@ public class EquacaoReta {
                     valorY = pontoAnterior + coeficienteReta;
                     pontoAnterior = valorY;
                 }
+                graphics.drawLine(valorXInicial, valorYInicial, valorX, valorY);
                 System.out.println("Valor X: " + valorX + " ValorY: " + valorY);
                 valorX--;
             }
@@ -183,10 +177,28 @@ public class EquacaoReta {
                     valorY = pontoAnterior + coeficienteReta;
                     pontoAnterior = valorY;
                 }
+                graphics.drawLine(valorXInicial, valorYInicial, valorX, valorY);
                 System.out.println("Valor X: " + valorX + " ValorY: " + valorY);
                 valorX++;
             }
         }
 
     }
-}
+
+    private static void construirJPanel(String title) {
+        JFrame frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(200,200);
+
+        EquacaoReta panel = new EquacaoReta();
+
+        frame.setContentPane(panel);
+        frame.setVisible(true);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+            g.drawLine(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
+        }
+    }

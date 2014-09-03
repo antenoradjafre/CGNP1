@@ -2,8 +2,6 @@ package com.java;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
 
 /**
  * Created by Antenor on 12/08/2014.
@@ -25,8 +23,8 @@ public class EquacaoReta extends JPanel{
     public static void main(String args[]) {
 //        desenharMatriz(tela);
         int raio = 10;
-//        Bresenham(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
-//        ForcaBruta(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
+        Bresenham(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
+        ForcaBruta(valorXInicial, valorYInicial, valorXFinal, valorYFinal);
 //        circuferencia(raio);
         construirJPanel("TESTE");
 
